@@ -2,9 +2,9 @@
 
 **Cloud-agnostic machine type advisor for computational workloads.**
 
-> Like a load balancer for cloud instances — recommends the best machine type for your workload across AWS, GCP, and Azure, and stays current as providers deprecate and release new types.
+> Like a load balancer for cloud instances that recommends the best machine type for your workload across AWS, GCP, and Azure, and stays current as providers deprecate and release new types.
 
-Built with bioinformatics workloads as the primary use case — sequencing demultiplexing, variant calling, metagenomics classification, protein structure prediction, and workflow orchestration — but designed to be domain-agnostic.
+Built with bioinformatics workloads as the primary use case, especially, workflow orchestration in mind but designed to be domain-agnostic.
 
 ---
 
