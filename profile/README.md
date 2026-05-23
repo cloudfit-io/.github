@@ -13,7 +13,7 @@ Built with bioinformatics workloads as the primary use case, especially, workflo
 | Package | Description | Status |
 |---|---|---|
 | [`cloudfit-core`](https://github.com/cloudfit-io/cloudfit-core) | Scoring engine · workload profiles · hard floor filters | ![PyPI](https://img.shields.io/pypi/v/cloudfit-core) |
-| `cloudfit-provider-gcp` | GCP Compute Engine machine type fetcher | coming soon |
+| [`cloudfit-provider-gcp`](https://github.com/cloudfit-io/cloudfit-provider-gcp) | GCP Compute Engine machine type fetcher | ![PyPI](https://img.shields.io/pypi/v/cloudfit-provider-gcp) |
 | `cloudfit-provider-aws` | AWS EC2 instance fetcher | coming soon |
 | `cloudfit-api` | REST API — `/recommend` · `/instances` · `/diff` | coming soon |
 | `cloudfit-cli` | CLI — `cloudfit recommend --workload demux` | coming soon |
@@ -30,8 +30,8 @@ profile = WorkloadProfile(
     optimize_for="balanced",   # cost | performance | availability | balanced
 )
 
-# Candidate instances come from a cloudfit-provider-* package (coming soon),
-# or supply your own list:
+# Candidate instances come from a cloudfit-provider-* package
+# (e.g. `pip install cloudfit-provider-gcp`), or supply your own list:
 candidates = [
     MachineType(id="t2d-standard-60",      provider="gcp", vcpu=60, ram_gb=240, price_hr=2.31),
     MachineType(id="c3d-standard-60-lssd", provider="gcp", vcpu=60, ram_gb=240, price_hr=3.39),
