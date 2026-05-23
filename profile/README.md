@@ -12,7 +12,7 @@ Built with bioinformatics workloads as the primary use case, especially, workflo
 
 | Package | Description | Status |
 |---|---|---|
-| [`cloudfit-core`](https://github.com/cloudfit-io/cloudfit-core) | Scoring engine · workload profiles · hard floor filters 
+| [`cloudfit-core`](https://github.com/cloudfit-io/cloudfit-core) | Scoring engine · workload profiles · hard floor filters | ![PyPI](https://img.shields.io/pypi/v/cloudfit-core) |
 | `cloudfit-provider-gcp` | GCP Compute Engine machine type fetcher | coming soon |
 | `cloudfit-provider-aws` | AWS EC2 instance fetcher | coming soon |
 | `cloudfit-api` | REST API — `/recommend` · `/instances` · `/diff` | coming soon |
@@ -21,17 +21,25 @@ Built with bioinformatics workloads as the primary use case, especially, workflo
 ## Quick example
 
 ```python
-from cloudfit import recommend
+from cloudfit import WorkloadProfile, MachineType, rank
 
-result = recommend(
+profile = WorkloadProfile(
     vcpu=60,
     ram_gb=224,
-    workload="compute-intensive"
+    workload="io-intensive",
     optimize_for="balanced",   # cost | performance | availability | balanced
-    providers=["gcp", "aws"],
 )
-print(result.top())
-# → GCP c3d-standard-60-lssd  $3.39/hr  score: 78
+
+# Candidate instances come from a cloudfit-provider-* package (coming soon),
+# or supply your own list:
+candidates = [
+    MachineType(id="t2d-standard-60",      provider="gcp", vcpu=60, ram_gb=240, price_hr=2.31),
+    MachineType(id="c3d-standard-60-lssd", provider="gcp", vcpu=60, ram_gb=240, price_hr=3.39),
+]
+
+best = rank(profile, candidates)[0]
+print(f"{best.instance.provider} {best.instance.id}  ${best.instance.price_hr}/hr  score: {best.score}")
+# → gcp t2d-standard-60  $2.31/hr  score: 0.8143
 ```
 
 ## Related projects
