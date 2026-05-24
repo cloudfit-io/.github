@@ -15,8 +15,42 @@ Built with bioinformatics workloads as the primary use case, especially, workflo
 | [`cloudfit-core`](https://github.com/cloudfit-io/cloudfit-core) | Scoring engine · workload profiles · hard floor filters | ![PyPI](https://img.shields.io/pypi/v/cloudfit-core) |
 | [`cloudfit-provider-gcp`](https://github.com/cloudfit-io/cloudfit-provider-gcp) | GCP Compute Engine machine type fetcher | ![PyPI](https://img.shields.io/pypi/v/cloudfit-provider-gcp) |
 | `cloudfit-provider-aws` | AWS EC2 instance fetcher | coming soon |
-| `cloudfit-api` | REST API — `/recommend` · `/instances` · `/diff` | coming soon |
+| [`cloudfit-api`](https://github.com/cloudfit-io/cloudfit-api) | REST API — `/recommend` · `/instances` · `/providers` · `/diff` | [live demo ↗](https://chaitanyakasaraneni-cloudfit-api.hf.space/docs) |
 | `cloudfit-cli` | CLI — `cloudfit recommend --workload demux` | coming soon |
+
+## Architecture
+
+```mermaid
+flowchart TD
+    GCP["GCP Compute Engine<br/>+ Cloud Billing Catalog"]:::live
+    AWSAZ["AWS EC2 · Azure VMs"]:::planned
+
+    PGCP["cloudfit-provider-gcp<br/>fetch → normalize → price"]:::live
+    PAWS["cloudfit-provider-aws"]:::planned
+
+    SNAP[("MachineType data<br/>bundled JSON snapshot — today<br/>Postgres registry — planned")]:::live
+
+    CORE["cloudfit-core · scoring engine<br/>hard-floor filter → weighted score<br/>cost · performance · availability"]:::live
+
+    API["cloudfit-api · FastAPI service<br/>/recommend · /instances · /providers · /diff"]:::live
+
+    DOCS["Swagger UI · /docs"]:::live
+    HTTP["curl / HTTP clients"]:::live
+    SDK["Python · import cloudfit"]:::live
+
+    GCP --> PGCP --> SNAP
+    AWSAZ -.-> PAWS -.-> SNAP
+    SNAP --> API
+    API -->|ranks with| CORE
+    API --> DOCS
+    API --> HTTP
+    CORE --> SDK
+
+    classDef live fill:#10261d,stroke:#4dff91,color:#e8eaf0;
+    classDef planned fill:#191919,stroke:#777,color:#aaa,stroke-dasharray:4 4;
+```
+
+Solid green = shipped · dashed grey = planned.
 
 ## Quick example
 
