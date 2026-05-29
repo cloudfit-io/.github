@@ -6,6 +6,8 @@
 
 Built with bioinformatics and batch workflow orchestration as the primary use case, but designed to be domain-agnostic.
 
+**New here?** Read the launch post: [Why I built cloudfit](https://ckasaraneni.com/blog/why-i-built-cloudfit) — the gap in existing free tooling (Compute Optimizer, Recommender, Advisor) and what cloudfit does about it.
+
 ---
 
 ## Libraries
