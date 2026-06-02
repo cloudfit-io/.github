@@ -81,7 +81,7 @@ candidates = [
 
 best = rank(profile, candidates)[0]
 print(f"{best.instance.provider} {best.instance.id}  ${best.instance.price_hr}/hr  score: {best.score}")
-# → gcp t2d-standard-60  $2.31/hr  score: 0.9782
+# → gcp t2d-standard-60  $2.31/hr  score: 1.0
 ```
 
 ## Related projects
