@@ -17,7 +17,7 @@ Built with bioinformatics and batch workflow orchestration as the primary use ca
 | [`cloudfit-core`](https://github.com/cloudfit-io/cloudfit-core) | Scoring engine · workload profiles · hard floor filters · region-aware · fit-based scoring (v0.3+) | ![PyPI](https://img.shields.io/pypi/v/cloudfit-core) |
 | [`cloudfit-provider-gcp`](https://github.com/cloudfit-io/cloudfit-provider-gcp) | GCP Compute Engine machine type fetcher (multi-region capable) | ![PyPI](https://img.shields.io/pypi/v/cloudfit-provider-gcp) |
 | [`cloudfit-provider-aws`](https://github.com/cloudfit-io/cloudfit-provider-aws) | AWS EC2 instance fetcher | planning phase |
-| [`cloudfit-api`](https://github.com/cloudfit-io/cloudfit-api) | REST API. `/recommend` · `/instances` · `/providers` · `/diff`. Multi-region snapshot bundled. | ![PyPI](https://img.shields.io/pypi/v/cloudfit-api) · [live demo ↗](https://chaitanyakasaraneni-cloudfit-api.hf.space/docs) |
+| [`cloudfit-api`](https://github.com/cloudfit-io/cloudfit-api) | REST API. `/recommend` · `/instances` · `/providers` · `/diff`. Multi-region snapshot bundled. Service, deployed as a container, not a PyPI package. | [live demo ↗](https://chaitanyakasaraneni-cloudfit-api.hf.space/docs) |
 | [`cloudfit-ui`](https://github.com/cloudfit-io/cloudfit-ui) | One-click Gradio demo over the scoring engine. Workload profile in, ranked instances out. | [live demo ↗](https://chaitanyakasaraneni-cloudfit-ui.hf.space) |
 
 ## Architecture
@@ -81,7 +81,7 @@ candidates = [
 
 best = rank(profile, candidates)[0]
 print(f"{best.instance.provider} {best.instance.id}  ${best.instance.price_hr}/hr  score: {best.score}")
-# → gcp t2d-standard-60  $2.31/hr  score: 1.0
+# → gcp t2d-standard-60  $2.31/hr  score: 0.9971
 ```
 
 ## Related projects
