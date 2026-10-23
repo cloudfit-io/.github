@@ -20,17 +20,17 @@ Built with bioinformatics and batch workflow orchestration as the primary use ca
 | [`cloudfit-api`](https://github.com/cloudfit-io/cloudfit-api) | REST API. `/recommend` · `/instances` · `/providers` · `/diff`, with a pricing mode and a reason for every pick. Multi-region snapshot bundled. Service, deployed as a container, not a PyPI package. | ![release](https://img.shields.io/github/v/release/cloudfit-io/cloudfit-api) [live demo ↗](https://chaitanyakasaraneni-cloudfit-api.hf.space/docs) |
 | [`cloudfit-ui`](https://github.com/cloudfit-io/cloudfit-ui) | One-click Gradio demo. Workload profile in, ranked instances out, with a pricing mode selector and a reason for each pick. | ![release](https://img.shields.io/github/v/release/cloudfit-io/cloudfit-ui) [live demo ↗](https://chaitanyakasaraneni-cloudfit-ui.hf.space) |
 
-Release notes for every version are on each repo's **Releases** page, published automatically from its `CHANGELOG.md`.
+Release notes for every version are on each repo's **Releases** page, published automatically from its `CHANGELOG.md`. The Python packages support Python 3.10 to 3.14.
 
 ## Features
 
 - **Hard floors with reasons.** Region, vCPU, RAM, GPU presence and VRAM, and lifecycle status are checked first; anything that cannot run your workload is disqualified with a plain-language reason.
 - **Effective capacity.** Each of 19 GCP machine families carries a documented `perf_factor` (n2 = 1.0), so vCPU fit and cost per unit of work reflect how fast the family really is.
-- **Spot and committed-use pricing.** Score on `on_demand`, `spot`, or `cud_1yr` prices; burst workloads default to spot, and a missing price falls back to on-demand rather than looking free.
+- **Spot and committed-use pricing.** Score on `on_demand`, `spot`, or `cud_1yr` prices; burst workloads and jobs marked `scheduling.spot` default to spot, and a missing price falls back to on-demand rather than looking free.
 - **GPU-aware.** VRAM is a hard floor and the GPU archetype scores accelerator throughput, so an A100 outranks a T4 at equal VRAM.
 - **Explainable picks.** Every result carries `contributions` (what cost, perf, and availability added to the score) and a one-line `reason`.
 - **Headroom.** Ask for spare capacity above what you declare, as a hard requirement or a soft preference.
-- **Archetypes, modes, and weights.** Five archetypes, four `optimize_for` modes, custom weights, and YAML workload profiles.
+- **Archetypes, modes, and weights.** Five archetypes, four `optimize_for` modes, custom weights, and YAML workload profiles (including pricing mode and region).
 - **Disk sizing.** `compute_disk_tb` estimates scratch disk from sequencer, flowcell, and lane count.
 - **Current catalog.** Deprecated machine types score lower and tombstoned ones are disqualified; prices are refreshed weekly from the GCP billing catalog via reviewed pull requests.
 
@@ -84,7 +84,7 @@ profile = WorkloadProfile(
     archetype="io",                # io | cpu | mem | gpu | burst
     optimize_for="balanced",       # cost | performance | availability | balanced
     region="us-central1",          # optional region hard floor
-    pricing_mode="on_demand",      # on_demand | spot | cud_1yr (default: spot for burst)
+    pricing_mode="on_demand",      # on_demand | spot | cud_1yr (default: spot for burst or scheduling.spot)
 )
 
 # Candidate instances come from a cloudfit-provider-* package
